@@ -10,6 +10,7 @@ const game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
 });
 
 let player, platforms, diamonds, scoreText, gameStatus, gameStatus2, cursors, enemy;
+let instructions, instructions2, instructions3, instructions4;
 let score = 0;
 let enemyStats = {
   moveSpeed: 300,
@@ -71,9 +72,13 @@ function create() {
     diamond.body.bounce.y = 0.3 + Math.random() * 0.2;
   }
 
+  instructions = game.add.text(16, 56, 'Right/Left Arrows to Move.', { fontSze: '80px', fill: '#CC0' })
+  instructions2 = game.add.text(16, 86, 'Up Arrow to Jump.', { fontSze: '80px', fill: '#CC0' })
+  instructions3 = game.add.text(16, 116, 'Collect Diamonds!', { fontSze: '80px', fill: '#CC0' })
+  instructions4 = game.add.text(16, 146, 'Avoid The Bad Doge!', { fontSze: '80px', fill: '#CC0' })
   gameStatus = game.add.text(game.world.width / 3, game.world.height / 3, '', { fontSze: '80px', fill: '#0A0' })
   gameStatus2 = game.add.text((game.world.width / 3) - 5, (game.world.height / 3) - 5, '', { fontSze: '80px', fill: '#A00' })
-  scoreText = game.add.text(16, 16, '', { fontSze: '32px', fill: '#000' });
+  scoreText = game.add.text(16, 16, 'Score: 0', { fontSze: '32px', fill: '#000' });
   cursors = game.input.keyboard.createCursorKeys();
 }
 
@@ -105,8 +110,9 @@ function update() {
   if (score === 120) {
     enemy.kill();
     score = 0;
-    gameStatus.text = 'YOU WIN!';
-    gameStatus2.text = 'YOU WIN!';
+    gameStatus.text = 'YOU WIN! Reload the page to try again.';
+    gameStatus2.text = 'YOU WIN! Reload the page to try again.';
+    clearInstructions();
   }
 }
 
@@ -138,6 +144,16 @@ function moveEnemy() {
 
 function enemyCollide() {
   player.kill();
-  gameStatus.text = 'YOU DEAD!';
-  gameStatus2.text = 'YOU DEAD!';
+  gameStatus.text = 'YOU DEAD! Reload the page to try again.';
+  gameStatus2.text = 'YOU DEAD! Reload the page to try again.';
+  clearInstructions();
+
+}
+
+function clearInstructions() {
+  instructions.text = '';
+  instructions2.text = '';
+  instructions3.text = '';
+  instructions4.text = '';
+
 }
